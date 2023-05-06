@@ -8,33 +8,72 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-// Home page
-app.get("/", (req, res) => {
-  res.send("Wow..!!! Route is Running for Chocolate Project");
-});
-
 const mongoose = require("mongoose");
 
 // Schema Design
 const regionSchema = mongoose.Schema(
   {
-    name: {
+    region: {
       type: String,
-      required: [true, "Please provide a name for Region"],
+      required: [true, "Please provide a name for this product"],
       trim: true,
+      unique: [true, "Name must be unique"],
+    },
+    district: {
+      type: [String],
+      required: true,
     },
   },
   { timestamps: true }
 );
 
 // SCHEMA -> MODEL -> QUERY
-const Product = mongoose.model("Region", regionSchema);
+const Regions =
+  mongoose.models.Region || mongoose.model("Region", regionSchema);
 
-module.exports = Product;
+// module.exports = Region;
+
+// Home page
+app.get("/", (req, res) => {
+  res.send("Wow..!!! Route is Running for Chocolate Project");
+});
 
 // post and read data from database
-app.post("/api/v1/region", (req, res, next) => {
-  res.send("it is working");
+app.post("/api/v1/region", async (req, res, next) => {
+  try {
+    const region = new Regions(req.body);
+    const result = await region.save();
+
+    res.status(200).json({
+      status: "Success",
+      message: "Data inserted successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Data is not inserted",
+      error: error.message,
+    });
+  }
+});
+
+// get all regions data from database
+app.get("/api/v1/region", async (req, res, next) => {
+  try {
+    const region = await Regions.find({});
+
+    res.status(200).json({
+      status: "Success",
+      data: region,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't get data",
+      error: error.message,
+    });
+  }
 });
 
 module.exports = app;
