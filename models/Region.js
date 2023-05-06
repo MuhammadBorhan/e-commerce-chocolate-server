@@ -1,18 +1,24 @@
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-// // Schema Design
-// const regionSchema = mongoose.Schema(
-//   {
-//     name: {
-//       type: String,
-//       required: [true, "Please provide a name for Region"],
-//       trim: true,
-//     },
-//   },
-//   { timestamps: true }
-// );
+// Schema Design
+const regionSchema = mongoose.Schema(
+  {
+    region: {
+      type: String,
+      required: [true, "Please provide a name for this product"],
+      trim: true,
+      unique: [true, "Name must be unique"],
+    },
+    district: {
+      type: [String],
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-// // SCHEMA -> MODEL -> QUERY
-// const Product = mongoose.model("Region", regionSchema);
+// SCHEMA -> MODEL -> QUERY
+const Regions =
+  mongoose.models.Region || mongoose.model("Region", regionSchema);
 
-// module.exports = Product;
+module.exports = Regions;
