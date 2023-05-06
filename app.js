@@ -59,13 +59,32 @@ app.post("/api/v1/region", async (req, res, next) => {
 });
 
 // get all regions data from database
-app.get("/api/v1/region", async (req, res, next) => {
+app.get("/api/v1/regions", async (req, res, next) => {
   try {
-    const region = await Regions.find({});
+    const result = await Regions.find({});
 
     res.status(200).json({
       status: "Success",
-      data: region,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't get data",
+      error: error.message,
+    });
+  }
+});
+
+// get all district of region from database
+app.get("/api/v1/region", async (req, res, next) => {
+  try {
+    const region = req.query.region;
+    const result = await Regions.find({ region: region });
+
+    res.status(200).json({
+      status: "Success",
+      data: result,
     });
   } catch (error) {
     res.status(400).json({
