@@ -2,18 +2,20 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-// const productRoute = require("./routes/Product.route");
-
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+// routes
+const regionRoute = require("./routes/Region.route");
+const brandRoute = require("./routes/Brands.route");
 
 // Home page
 app.get("/", (req, res) => {
   res.send("Wow..!!! Route is Running for Chocolate Project");
 });
 
-// post and read data from database
-// app.use("/api/v1/product", productRoute);
+app.use("/api/v1", regionRoute);
+app.use("/api/v1", brandRoute);
 
 module.exports = app;
