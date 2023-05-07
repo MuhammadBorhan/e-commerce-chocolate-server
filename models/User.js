@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema(
       //     message: "Password {VALUE} is not strong enough",
       //   },
       trim: true,
+      minLength: 6,
       lowercase: true,
       unique: true,
     },

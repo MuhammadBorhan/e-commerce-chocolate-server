@@ -1,4 +1,5 @@
 const Users = require("../models/User");
+const { generateToken } = require("../utils/token");
 exports.postUser = async (req, res, next) => {
   try {
     const users = new Users(req.body);
@@ -8,6 +9,54 @@ exports.postUser = async (req, res, next) => {
       status: "Success",
       message: "Data inserted successfully!",
       data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Data is not inserted",
+      error: error.message,
+    });
+  }
+};
+
+exports.loginPost = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(401).json({
+        status: "fail",
+        error: "Please provide your credentials",
+      });
+    }
+
+    const user = await Users.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({
+        status: "fail",
+        error: " User not found. Please create an account first",
+      });
+    }
+
+    const isPasswordValid = user.password;
+    if (isPasswordValid !== password) {
+      return res.status(403).json({
+        status: "fail",
+        error: "Password is not correct",
+      });
+    }
+
+    const token = generateToken(user);
+
+    const { password: pwd, confirmPassword: cpwd, ...others } = user.toObject();
+
+    res.status(200).json({
+      status: "Success",
+      error: "Successfully logged in",
+      data: {
+        user: others,
+        token,
+      },
     });
   } catch (error) {
     res.status(400).json({
