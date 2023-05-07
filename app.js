@@ -15,7 +15,6 @@ const regionRoute = require("./routes/Region.route");
 app.get("/", (req, res) => {
   res.send("Wow..!!! Route is Running for Chocolate Project");
 });
-
 app.use("/api/v1", regionRoute);
 
 module.exports = app;
