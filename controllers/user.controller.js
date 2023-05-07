@@ -59,9 +59,25 @@ exports.loginPost = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: "fail",
       message: "Data is not inserted",
+      error: error.message,
+    });
+  }
+};
+
+exports.getMe = async (req, res) => {
+  try {
+    const email = req.user?.email;
+    const user = await Users.findOne({ email });
+    res.status(200).json({
+      status: "Success",
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
       error: error.message,
     });
   }
