@@ -2,7 +2,8 @@ const Regions = require("../models/Region");
 
 exports.getRegions = async (req, res, next) => {
   try {
-    const result = await Regions.find({}, "region").sort({ region: 1 });
+    // const result = await Regions.find({}, "region").sort({ region: 1 });
+    const result = await Regions.find({}).sort({ region: 1 });
 
     res.status(200).json({
       status: "Success",
