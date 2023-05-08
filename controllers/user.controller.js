@@ -52,7 +52,7 @@ exports.loginPost = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      error: "Successfully logged in",
+      message: "Successfully logged in",
       data: {
         user: others,
         token,
