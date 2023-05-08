@@ -82,3 +82,18 @@ exports.getMe = async (req, res) => {
     });
   }
 };
+
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await Users.find({});
+    res.status(200).json({
+      status: "Success",
+      data: users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
