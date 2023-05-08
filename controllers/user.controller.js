@@ -48,15 +48,13 @@ exports.loginPost = async (req, res, next) => {
 
     const token = generateToken(user);
 
-    const { password: pwd, confirmPassword: cpwd, ...others } = user.toObject();
+    // const { password: pwd, confirmPassword: cpwd, ...others } = user.toObject();
+    const result = user;
 
     res.status(200).json({
       status: "Success",
       error: "Successfully logged in",
-      data: {
-        user: others,
-        token,
-      },
+      data: result,
     });
   } catch (error) {
     res.status(500).json({
