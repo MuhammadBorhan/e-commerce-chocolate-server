@@ -1,14 +1,18 @@
 const Users = require("../models/User");
 const { generateToken } = require("../utils/token");
+
 exports.postUser = async (req, res, next) => {
   try {
     const users = new Users(req.body);
     const result = await users.save();
 
+    const token = generateToken(users);
+
     res.status(200).json({
       status: "Success",
       message: "Data inserted successfully!",
       data: result,
+      token,
     });
   } catch (error) {
     res.status(400).json({
