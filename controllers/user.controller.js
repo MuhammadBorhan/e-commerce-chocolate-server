@@ -1,5 +1,6 @@
 const Users = require("../models/User");
 const { generateToken } = require("../utils/token");
+
 exports.postUser = async (req, res, next) => {
   try {
     const users = new Users(req.body);
