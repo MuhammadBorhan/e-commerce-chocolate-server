@@ -101,3 +101,28 @@ exports.getUsers = async (req, res) => {
     });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Users.deleteOne({ _id: id });
+
+    if (!result.deletedCount) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Couldn't delete the data",
+        error: error.message,
+      });
+    }
+    res.status(200).json({
+      status: "Successfully delete",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Couldn't delete the data",
+      error: error.message,
+    });
+  }
+};
