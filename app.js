@@ -8,9 +8,6 @@ app.use(express.json());
 
 // routes
 const regionRoute = require("./routes/Region.route");
-const brandRoute = require("./routes/Brands.route");
-const brandItemRoute = require("./routes/BrandItem.route");
-const brandProductRoute = require("./routes/BrandProduct.route");
 const userRoute = require("./routes/user.route");
 const productsRoute = require("./routes/Products.route");
 
@@ -20,9 +17,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1", regionRoute);
-app.use("/api/v1", brandRoute);
-app.use("/api/v1", brandItemRoute);
-app.use("/api/v1", brandProductRoute);
 app.use("/api/v1", userRoute);
 app.use("/api/v1", productsRoute);
 
