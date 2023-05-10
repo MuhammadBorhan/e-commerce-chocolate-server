@@ -7,5 +7,6 @@ router.route("/signup").post(userController.postUser);
 router.route("/login").post(userController.loginPost);
 router.route("/me").get(verifyToken, userController.getMe);
 router.route("/users").get(userController.getUsers);
+router.route("/user/:id").delete(userController.deleteUser);
 
 module.exports = router;
