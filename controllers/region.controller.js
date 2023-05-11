@@ -21,7 +21,7 @@ exports.getRegions = async (req, res, next) => {
 exports.getRegionsDistrict = async (req, res, next) => {
   try {
     const region = req.query.region;
-    const result = await Regions.find({ region: region });
+    const result = await Regions.find({ region: region }, "district");
 
     res.status(200).json({
       status: "Success",

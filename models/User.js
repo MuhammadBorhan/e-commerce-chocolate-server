@@ -11,7 +11,6 @@ const userSchema = mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: [true, "Please provide your last name"],
       trim: true,
     },
     email: {
@@ -24,7 +23,6 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
       //   validate: {
       //     validator: (value) =>
       //       validator.isStrongPassword(value, {
