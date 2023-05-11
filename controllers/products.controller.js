@@ -35,3 +35,21 @@ exports.getProducts = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await products.deleteOne({ _id: id });
+
+    res.status(200).json({
+      status: "Successfully Delete",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't delete data",
+      error: error.message,
+    });
+  }
+};
