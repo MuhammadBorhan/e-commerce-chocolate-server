@@ -10,6 +10,8 @@ app.use(express.json());
 const regionRoute = require("./routes/Region.route");
 const userRoute = require("./routes/user.route");
 const productsRoute = require("./routes/Products.route");
+const brandRoute = require("./routes/Brand.route");
+const giftBoxRoute = require("./routes/GiftBox.route");
 
 // Home page
 app.get("/", (req, res) => {
@@ -19,5 +21,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1", regionRoute);
 app.use("/api/v1", userRoute);
 app.use("/api/v1", productsRoute);
+app.use("/api/v1", brandRoute);
+app.use("/api/v1", giftBoxRoute);
 
 module.exports = app;

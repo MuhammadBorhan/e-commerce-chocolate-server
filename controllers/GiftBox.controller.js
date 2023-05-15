@@ -1,9 +1,9 @@
-const products = require("../models/Products");
+const GiftBox = require("../models/GiftBox");
 
-exports.createProduct = async (req, res, next) => {
+exports.createGiftBox = async (req, res) => {
   try {
-    const saveProduct = new products(req.body);
-    const result = await saveProduct.save();
+    const saveGiftBox = new GiftBox(req.body);
+    const result = await saveGiftBox.save();
 
     res.status(200).json({
       status: "Success",
@@ -19,9 +19,9 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
-exports.getProducts = async (req, res, next) => {
+exports.getGiftBox = async (req, res) => {
   try {
-    const result = await products.find({});
+    const result = await GiftBox.find({});
 
     res.status(200).json({
       status: "Success",
@@ -36,10 +36,10 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
-exports.getProductById = async (req, res, next) => {
+exports.getGiftBoxById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await products.findOne({ _id: id });
+    const result = await GiftBox.findOne({ _id: id });
 
     res.status(200).json({
       status: "Success",
@@ -54,10 +54,10 @@ exports.getProductById = async (req, res, next) => {
   }
 };
 
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteGiftBox = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await products.deleteOne({ _id: id });
+    const result = await GiftBox.deleteOne({ _id: id });
 
     res.status(200).json({
       status: "Successfully Delete",
@@ -72,20 +72,20 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
-exports.updateProduct = async (req, res) => {
+exports.updateGiftBox = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
-    const result = await products.updateOne({ _id: id }, body);
+    const result = await GiftBox.updateOne({ _id: id }, body);
 
     res.status(200).json({
-      status: "Successfully update the Product",
+      status: "Successfully update",
       data: result,
     });
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "Couldn't update the Product",
+      message: "Couldn't update",
       error: error.message,
     });
   }
