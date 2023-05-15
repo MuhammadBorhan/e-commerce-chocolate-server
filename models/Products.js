@@ -3,27 +3,28 @@ const mongoose = require("mongoose");
 // Schema Design
 const roductsSchema = mongoose.Schema(
   {
-    district: {
+    name: {
       type: String,
       required: true,
+      trim: true,
     },
-    brandName: {
+    brand: {
       type: String,
       required: [true, "Please provide a brand name "],
       trim: true,
     },
-    brandImage: {
+    desc: {
       type: String,
-      required: [true, "Please provide a name "],
+      trim: true,
     },
-    products: [
-      {
-        name: String,
-        image: String,
-        price: Number,
-        quantity: Number,
-      },
-    ],
+    price: {
+      type: Number,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
