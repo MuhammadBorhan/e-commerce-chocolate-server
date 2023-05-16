@@ -7,5 +7,6 @@ router
   .route("/region")
   .get(regionController.getRegionsDistrict)
   .post(regionController.postRegion);
+router.route("/region/:id").patch(regionController.updateRegion);
 
 module.exports = router;
