@@ -54,3 +54,23 @@ exports.postRegion = async (req, res, next) => {
     });
   }
 };
+
+exports.updateRegion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const region = await Regions.updateOne({ _id: id }, body);
+
+    res.status(200).json({
+      status: "Success",
+      message: "Data update successfully!",
+      data: region,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Data is not update",
+      error: error.message,
+    });
+  }
+};
