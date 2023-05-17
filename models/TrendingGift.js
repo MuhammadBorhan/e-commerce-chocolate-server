@@ -1,27 +1,18 @@
 const mongoose = require("mongoose");
 
 // Schema Design
-const roductsSchema = mongoose.Schema(
+const trendGiftSchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     brand: {
       type: String,
       required: [true, "Please provide a brand name "],
       trim: true,
     },
-    desc: {
+    region: {
       type: String,
       trim: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
-    image: {
+    district: {
       type: String,
       required: true,
     },
@@ -30,7 +21,8 @@ const roductsSchema = mongoose.Schema(
 );
 
 // SCHEMA -> MODEL -> QUERY
-const products =
-  mongoose.models.Products || mongoose.model("Products", roductsSchema);
+const TrendingGift =
+  mongoose.models.TrendingGift ||
+  mongoose.model("TrendingGift", trendGiftSchema);
 
-module.exports = products;
+module.exports = TrendingGift;
