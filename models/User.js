@@ -40,12 +40,12 @@ const userSchema = mongoose.Schema(
     },
     confirmPassword: {
       type: String,
-      //   validate: {
-      //     validator: function (value) {
-      //       return value == this.password;
-      //     },
-      //     message: "Password don't match",
-      //   },
+      validate: {
+        validator: function (value) {
+          return value == this.password;
+        },
+        message: "Password don't match",
+      },
     },
     role: {
       type: String,
