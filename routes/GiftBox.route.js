@@ -8,6 +8,14 @@ router
   .post(giftBoxController.createGiftBox);
 
 router
+  .route("/selectgiftbox")
+  .get(giftBoxController.getSelectGiftBox)
+  .post(giftBoxController.createSelectGiftBox);
+router
+  .route("/selectgiftbox/:id")
+  .delete(giftBoxController.deleteSelectGiftBox);
+
+router
   .route("/giftbox/:id")
   .get(giftBoxController.getGiftBoxById)
   .patch(giftBoxController.updateGiftBox)
