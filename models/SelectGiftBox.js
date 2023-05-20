@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 // Schema Design
 const selectGiftBoxSchema = mongoose.Schema(
   {
-    boxName: {
+    name: {
       type: String,
       required: true,
       trim: true,
     },
-    boxImage: {
+    image: {
       type: String,
       required: true,
     },
-    brandName: {
+    brand: {
       type: String,
       required: [true, "Please provide a brand name "],
       trim: true,
