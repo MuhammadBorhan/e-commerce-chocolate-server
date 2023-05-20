@@ -2,7 +2,13 @@ const products = require("../models/Products");
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const saveProduct = new products(req.body);
+    const saveProduct = new products({
+      name: req.body.name,
+      brand: req.body.brand,
+      desc: req.body.desc,
+      price: req.body.price,
+      image: req.file.path,
+    });
     const result = await saveProduct.save();
 
     res.status(200).json({
