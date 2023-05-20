@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productsController = require("../controllers/products.controller");
 const multer = require("multer");
+const path = require("path");
 
 // Multer configuration for handling file uploads
 // const storage = multer.diskStorage({
