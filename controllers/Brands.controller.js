@@ -2,7 +2,11 @@ const Brand = require("../models/Brand");
 
 exports.createBrand = async (req, res) => {
   try {
-    const newBrand = new Brand(req.body);
+    const newBrand = new Brand({
+      name: req.body.name,
+      image: req.files["image"][0].filename,
+      logo: req.files["logo"][0].filename,
+    });
     const result = await newBrand.save();
 
     res.status(200).json({

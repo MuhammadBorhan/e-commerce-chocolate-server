@@ -3,7 +3,14 @@ const SelectGiftBox = require("../models/SelectGiftBox");
 
 exports.createGiftBox = async (req, res) => {
   try {
-    const saveGiftBox = new GiftBox(req.body);
+    // const saveGiftBox = new GiftBox(req.body);
+    const saveGiftBox = new GiftBox({
+      name: req.body.name,
+      brand: req.body.brand,
+      productList: req.body.productList,
+      image: req.file.path,
+    });
+
     const result = await saveGiftBox.save();
 
     res.status(200).json({
