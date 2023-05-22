@@ -52,13 +52,13 @@ exports.loginPost = async (req, res, next) => {
 
     const token = generateToken(user);
 
-    const { password: pwd, confirmPassword: cpwd, ...others } = user.toObject();
+    // const { password: pwd, confirmPassword: cpwd, ...others } = user.toObject();
 
     res.status(200).json({
       status: "Success",
       message: "Successfully logged in",
       data: {
-        user: others,
+        user: user,
         token,
       },
     });

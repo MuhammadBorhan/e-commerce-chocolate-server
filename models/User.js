@@ -56,6 +56,6 @@ const userSchema = mongoose.Schema(
 );
 
 // SCHEMA -> MODEL -> QUERY
-const Users = mongoose.models.User || mongoose.model("User", userSchema);
+const Users = mongoose.model("User", userSchema);
 
 module.exports = Users;
