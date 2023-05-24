@@ -21,7 +21,7 @@ router
 router
   .route("/products/:id")
   .get(productsController.getProductById)
-  .patch(productsController.updateProduct)
+  .patch(upload.single("image"), productsController.updateProduct)
   .delete(productsController.deleteProduct);
 
 module.exports = router;
