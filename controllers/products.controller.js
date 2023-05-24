@@ -82,7 +82,9 @@ exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
-    const result = await products.updateOne({ _id: id }, body);
+    const image = req.file.path;
+
+    const result = await products.updateOne({ _id: id }, { ...body, image });
 
     res.status(200).json({
       status: "Successfully update the Product",
