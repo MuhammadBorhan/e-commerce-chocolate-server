@@ -36,6 +36,24 @@ exports.getRegionsDistrict = async (req, res, next) => {
   }
 };
 
+exports.getRegionById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await Regions.findOne({ _id: id });
+
+    res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't get data",
+      error: error.message,
+    });
+  }
+};
+
 exports.postRegion = async (req, res, next) => {
   try {
     const region = new Regions(req.body);
