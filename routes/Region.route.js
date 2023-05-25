@@ -9,6 +9,7 @@ router
   .post(regionController.postRegion);
 router
   .route("/region/:id")
+  .get(regionController.getRegionById)
   .patch(regionController.updateRegion)
   .delete(regionController.deleteRegion);
 
