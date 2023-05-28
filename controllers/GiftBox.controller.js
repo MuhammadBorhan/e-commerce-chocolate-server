@@ -84,26 +84,25 @@ exports.updateGiftBox = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
-    const result = await GiftBox.updateOne({ _id: id }, body);
+    const result = await SelectGiftBox.deleteOne({ _id: id }, body);
 
     res.status(200).json({
-      status: "Successfully update",
+      status: "Successfully Update",
       data: result,
     });
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "Couldn't update",
+      message: "Can't update data",
       error: error.message,
     });
   }
 };
 
 // select gift box
-exports.createSelectGiftBox = async (req, res) => {
+exports.selectGiftBox = async (req, res) => {
   try {
-    const saveSelectGiftBox = new SelectGiftBox(req.body);
-    const result = await saveSelectGiftBox.save();
+    const result = await GiftBox.find({ isEnabled: true });
 
     res.status(200).json({
       status: "Success",
@@ -119,36 +118,20 @@ exports.createSelectGiftBox = async (req, res) => {
   }
 };
 
-exports.getSelectGiftBox = async (req, res) => {
-  try {
-    const result = await SelectGiftBox.find({});
-
-    res.status(200).json({
-      status: "Success",
-      data: result,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Can't get data",
-      error: error.message,
-    });
-  }
-};
-
-exports.deleteSelectGiftBox = async (req, res) => {
+exports.updateSelectGiftBox = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await SelectGiftBox.deleteOne({ _id: id });
+    const { isEnabled } = req.body;
+    const result = await GiftBox.findByIdAndUpdate(id, { isEnabled });
 
     res.status(200).json({
-      status: "Successfully Delete",
+      status: "Successfully update",
       data: result,
     });
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "Can't delete data",
+      message: "Couldn't update",
       error: error.message,
     });
   }
