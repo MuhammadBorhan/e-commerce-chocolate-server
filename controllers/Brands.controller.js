@@ -78,9 +78,18 @@ exports.deleteBrandById = async (req, res) => {
 
 exports.updateBrandById = async (req, res) => {
   try {
+    // const newBrand = new Brand({
+    //   name: req.body.name,
+    //   image: req.files["image"][0].filename,
+    //   logo: req.files["logo"][0].filename,
+    // });
+    // const image = req.file.path;
     const { id } = req.params;
     const body = req.body;
-    const result = await Brand.updateOne({ _id: id }, body);
+    const image = req.file.path;
+    console.log(body);
+    console.log(image);
+    const result = await Brand.updateOne({ _id: id }, { ...body, image });
 
     res.status(200).json({
       status: "Successfully update the Brand",
