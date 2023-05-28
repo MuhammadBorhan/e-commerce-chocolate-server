@@ -6,6 +6,7 @@ const path = require("path");
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // routes
@@ -19,7 +20,7 @@ const eventRoute = require("./routes/Event.route");
 
 // Home page
 app.get("/", (req, res) => {
-  res.send("Wow..!!! Route is Running for Chocolate Project");
+  res.send(`Wow..!!! Route is Running for Chocolate Project `);
 });
 app.use("/api/v1", regionRoute);
 app.use("/api/v1", userRoute);

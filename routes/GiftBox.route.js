@@ -18,13 +18,8 @@ router
   .get(giftBoxController.getGiftBox)
   .post(upload.single("image"), giftBoxController.createGiftBox);
 
-router
-  .route("/selectgiftbox")
-  .get(giftBoxController.getSelectGiftBox)
-  .post(giftBoxController.createSelectGiftBox);
-router
-  .route("/selectgiftbox/:id")
-  .delete(giftBoxController.deleteSelectGiftBox);
+router.route("/selectgiftbox").get(giftBoxController.selectGiftBox);
+router.route("/selectgiftbox/:id").patch(giftBoxController.updateSelectGiftBox);
 
 router
   .route("/giftbox/:id")

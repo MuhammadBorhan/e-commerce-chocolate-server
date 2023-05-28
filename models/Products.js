@@ -13,14 +13,20 @@ const roductsSchema = mongoose.Schema(
       required: [true, "Please provide a brand name "],
       trim: true,
     },
-    desc: {
-      type: String,
-      trim: true,
-    },
     price: {
       type: Number,
       required: true,
     },
+    color: {
+      type: String,
+      required: [true, "Please provide a color name "],
+      trim: true,
+    },
+    desc: {
+      type: String,
+      trim: true,
+    },
+
     image: {
       type: String,
       required: true,
