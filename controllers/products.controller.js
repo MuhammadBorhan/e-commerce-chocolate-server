@@ -5,8 +5,9 @@ exports.createProduct = async (req, res, next) => {
     const saveProduct = new products({
       name: req.body.name,
       brand: req.body.brand,
-      desc: req.body.desc,
       price: req.body.price,
+      color: req.body.color,
+      desc: req.body.desc,
       image: req.file.path,
     });
     const result = await saveProduct.save();
@@ -28,6 +29,24 @@ exports.createProduct = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   try {
     const result = await products.find({});
+
+    res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't get data",
+      error: error.message,
+    });
+  }
+};
+
+exports.getProductByBrand = async (req, res, next) => {
+  try {
+    const brand = req.query.brand;
+    const result = await products.find({ brand: brand });
 
     res.status(200).json({
       status: "Success",

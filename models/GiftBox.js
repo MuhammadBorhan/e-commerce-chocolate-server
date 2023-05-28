@@ -17,6 +17,10 @@ const giftBoxSchema = mongoose.Schema(
       required: [true, "Please provide a brand name "],
       trim: true,
     },
+    isEnabled: {
+      type: Boolean,
+      default: false,
+    },
     productList: [
       {
         type: String,
