@@ -18,6 +18,8 @@ router
   .get(productsController.getProducts)
   .post(upload.single("image"), productsController.createProduct);
 
+router.route("/product").get(productsController.getProductByBrand);
+
 router
   .route("/products/:id")
   .get(productsController.getProductById)

@@ -5,25 +5,31 @@ const roductsSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     brand: {
       type: String,
-      // required: [true, "Please provide a brand name "],
+      required: [true, "Please provide a brand name "],
+      trim: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: [true, "Please provide a color name "],
       trim: true,
     },
     desc: {
       type: String,
       trim: true,
     },
-    price: {
-      type: Number,
-      // required: true,
-    },
+
     image: {
       type: String,
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }
