@@ -97,14 +97,31 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
+exports.updateProductWithImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const image = req.file.path;
+    const result = await products.updateOne({ _id: id }, { ...body, image });
+
+    res.status(200).json({
+      status: "Successfully update the Product",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Couldn't update the Product",
+      error: error.message,
+    });
+  }
+};
+
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-
     const body = req.body;
-    const image = req.file.path;
-
-    const result = await products.updateOne({ _id: id }, { ...body, image });
+    const result = await products.updateOne({ _id: id }, body);
 
     res.status(200).json({
       status: "Successfully update the Product",

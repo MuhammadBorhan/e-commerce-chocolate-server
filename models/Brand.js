@@ -9,6 +9,10 @@ const brandSchema = mongoose.Schema(
       trim: true,
       unique: true,
     },
+    desc: {
+      type: String,
+      trim: true,
+    },
     logo: {
       type: String,
     },

@@ -23,7 +23,10 @@ router.route("/product").get(productsController.getProductByBrand);
 router
   .route("/products/:id")
   .get(productsController.getProductById)
-  .patch(upload.single("image"), productsController.updateProduct)
+  .patch(upload.single("image"), productsController.updateProductWithImage)
+  .patch(productsController.updateProduct)
   .delete(productsController.deleteProduct);
+
+router.route("/product/:id").patch(productsController.updateProduct);
 
 module.exports = router;
