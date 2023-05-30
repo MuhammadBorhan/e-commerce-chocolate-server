@@ -4,6 +4,7 @@ exports.createBrand = async (req, res) => {
   try {
     const newBrand = new Brand({
       name: req.body.name,
+      desc: req.body.desc,
       image: req.files["image"][0].filename,
       logo: req.files["logo"][0].filename,
     });
@@ -76,20 +77,32 @@ exports.deleteBrandById = async (req, res) => {
   }
 };
 
-exports.updateBrandById = async (req, res) => {
+exports.updateBrandWithImage = async (req, res) => {
   try {
-    // const newBrand = new Brand({
-    //   name: req.body.name,
-    //   image: req.files["image"][0].filename,
-    //   logo: req.files["logo"][0].filename,
-    // });
-    // const image = req.file.path;
     const { id } = req.params;
     const body = req.body;
-    const image = req.file.path;
-    console.log(body);
-    console.log(image);
-    const result = await Brand.updateOne({ _id: id }, { ...body, image });
+    const image = req.files["image"][0].filename;
+    const logo = req.files["logo"][0].filename;
+    const result = await Brand.updateOne({ _id: id }, { ...body, image, logo });
+
+    res.status(200).json({
+      status: "Successfully update the Brand",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Couldn't update the Brand",
+      error: error.message,
+    });
+  }
+};
+
+exports.updateBrandWithoutImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const result = await Brand.updateOne({ _id: id }, body);
 
     res.status(200).json({
       status: "Successfully update the Brand",

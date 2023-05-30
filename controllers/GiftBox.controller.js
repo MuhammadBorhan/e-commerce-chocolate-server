@@ -80,11 +80,31 @@ exports.deleteGiftBox = async (req, res) => {
   }
 };
 
-exports.updateGiftBox = async (req, res) => {
+exports.updateGiftBoxWithImage = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
-    const result = await SelectGiftBox.deleteOne({ _id: id }, body);
+    const image = req.file.path;
+    const result = await GiftBox.updateOne({ _id: id }, { ...body, image });
+
+    res.status(200).json({
+      status: "Successfully Update",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't update data",
+      error: error.message,
+    });
+  }
+};
+
+exports.updateWithoutImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const result = await GiftBox.updateOne({ _id: id }, body);
 
     res.status(200).json({
       status: "Successfully Update",
