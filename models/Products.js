@@ -15,7 +15,7 @@ const roductsSchema = mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
+      default: 0,
     },
     color: {
       type: String,
