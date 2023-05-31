@@ -6,6 +6,8 @@ exports.createGiftBox = async (req, res) => {
     // const saveGiftBox = new GiftBox(req.body);
     const saveGiftBox = new GiftBox({
       name: req.body.name,
+      price: req.body.price,
+      desc: req.body.desc,
       brand: req.body.brand,
       productList: req.body.productList,
       image: req.file.path,

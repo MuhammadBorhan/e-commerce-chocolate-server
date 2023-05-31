@@ -31,9 +31,11 @@ const eventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     desc: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
