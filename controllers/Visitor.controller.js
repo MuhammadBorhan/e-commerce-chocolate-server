@@ -3,11 +3,21 @@ const geoip = require("geoip-lite");
 const axios = require("axios");
 
 exports.saveVisitor = async (req, res, next) => {
-  const response = await axios.get(`http://ip-api.com/json/`);
-  //   console.log(response);
-  const { isp, country, city, query } = response.data;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  console.log(ip);
+  //   const geo = geoip.lookup(ip);
+  //   console.log(geo);
+  //   const cleanIP = ip.replace(/^.*:/, "");
+  //   console.log(cleanIP);
+  //   const response = await axios.get(
+  //     `http://api.ipstack.com/${ip}?access_key=e6ce541e47dec170e61a0a3c0307c49e`
+  //   );
+  const response = await axios.get(`http://ip-api.com/json/${ip}`);
+  console.log(response);
+  //   const { isp, country_name: country, city } = response.data;
+  const { isp, country, city } = response.data;
 
-  const visitor = new Visitor({ ip: query, isp, country, city });
+  const visitor = new Visitor({ ip, isp, country, city });
   visitor
     .save()
     .then(() => res.sendStatus(200))
