@@ -4,6 +4,8 @@ const visitorController = require("../controllers/Visitor.controller");
 
 // router.use(visitorController.saveVisitor);
 router.get("/visitor", visitorController.saveVisitor);
-router.get("/visitors", visitorController.getVisitors);
+router
+  .get("/visitors", visitorController.getVisitors)
+  .get("/visitorss", visitorController.getVisitorss);
 
 module.exports = router;
