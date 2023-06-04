@@ -17,6 +17,7 @@ const brandRoute = require("./routes/Brand.route");
 const giftBoxRoute = require("./routes/GiftBox.route");
 const trendGiftRoute = require("./routes/TrendGift.route");
 const eventRoute = require("./routes/Event.route");
+const visitorRoute = require("./routes/Visitor.route");
 
 // Home page
 app.get("/", (req, res) => {
@@ -29,5 +30,6 @@ app.use("/api/v1", brandRoute);
 app.use("/api/v1", giftBoxRoute);
 app.use("/api/v1", trendGiftRoute);
 app.use("/api/v1", eventRoute);
+app.use("/api/v1", visitorRoute);
 
 module.exports = app;

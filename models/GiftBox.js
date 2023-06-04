@@ -5,10 +5,16 @@ const giftBoxSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Please provide gift box name "],
       trim: true,
     },
     image: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+    desc: {
       type: String,
     },
     brand: {
