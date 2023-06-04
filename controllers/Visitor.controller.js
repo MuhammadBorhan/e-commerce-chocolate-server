@@ -1,32 +1,20 @@
 const Visitor = require("../models/Visitor");
 const geoip = require("geoip-lite");
+const axios = require("axios");
 
 exports.saveVisitor = async (req, res, next) => {
-  try {
-    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    const geo = geoip.lookup(ip);
+  const response = await axios.get(`http://ip-api.com/json/`);
+  //   console.log(response);
+  const { isp, country, city, query } = response.data;
 
-    const visitor = new Visitor({
-      ip: ip,
-      isp: req.headers["isp"],
-      country: geo ? geo.country : "Unknown",
-      city: geo ? geo.city : "Unknown",
+  const visitor = new Visitor({ ip: query, isp, country, city });
+  visitor
+    .save()
+    .then(() => res.sendStatus(200))
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
     });
-
-    const result = await visitor.save();
-
-    res.status(200).json({
-      status: "Success",
-      message: "Data inserted successfully!",
-      data: result,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Data is not inserted",
-      error: error.message,
-    });
-  }
 };
 
 exports.getVisitors = async (req, res) => {
