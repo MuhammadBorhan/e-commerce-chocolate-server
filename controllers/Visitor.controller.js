@@ -23,27 +23,6 @@ exports.getVisitors = async (req, res) => {
     res.status(200).json({
       status: "Success",
       data: result,
-      // data: dp,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Can't get data",
-      error: error.message,
-    });
-  }
-};
-
-exports.getVisitorss = async (req, res) => {
-  try {
-    // const dp = await Visitor.distinct("city");
-    const result = await Visitor.find({}).distinct("ip");
-    result?.filter((ip) => ip);
-
-    res.status(200).json({
-      status: "Success",
-      data: result,
-      // data: dp,
     });
   } catch (error) {
     res.status(400).json({
