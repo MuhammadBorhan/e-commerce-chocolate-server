@@ -37,6 +37,9 @@ const eventSchema = mongoose.Schema(
     desc: {
       type: String,
     },
+    capacity: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

@@ -11,6 +11,7 @@ exports.createEvent = async (req, res) => {
       status: req.body.status,
       gmeet: req.body.gmeet,
       desc: req.body.desc,
+      capacity: req.body.capacity,
       image: req.file.path,
     });
     const result = await saveEvent.save();
