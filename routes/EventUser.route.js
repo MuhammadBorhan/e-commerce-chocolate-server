@@ -7,8 +7,6 @@ router
   .get(eventUserController.getEventUser)
   .post(eventUserController.createEventUser);
 
-router.route("/sendemail").get(eventUserController.sendEmail);
-
 // router
 //   .route("/event/:id")
 //   .get(eventController.getEventById)
