@@ -4,8 +4,15 @@ const mongoose = require("mongoose");
 const eventUserSchema = mongoose.Schema(
   {
     name: String,
-    email: String,
+    email: {
+      type: String,
+      require: true,
+    },
     phone: String,
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
   },
   { timestamps: true }
 );
