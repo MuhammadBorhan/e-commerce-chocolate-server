@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const EventUser = require("../models/EventUser");
+const Event = require("../models/Event");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -9,44 +10,83 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.createEventUser = (req, res) => {
-  const { name, email, phone } = req.body;
+exports.createEventUser = async (req, res) => {
+  const { name, email, phone, eventId } = req.body;
 
-  EventUser.findOne({ email })
-    .then((existingUser) => {
-      if (existingUser) {
-        return res
-          .status(400)
-          .json({ error: "User already registered for this event" });
+  try {
+    const existingUser = await EventUser.findOne({ email, event: eventId });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "User already registered for this event" });
+    }
+
+    const user = new EventUser({ name, email, phone, event: eventId });
+    await user.save();
+
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    const mailOptions = {
+      from: "Indulge Chocolate",
+      to: email,
+      subject: "Event Registration",
+      text: `Thank you for registering for the event ${event.title}. Here is the Google Meet link: ${event.gmeet}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Failed to send email" });
       }
-
-      const user = new EventUser({ name, email, phone });
-      user
-        .save()
-        .then(() => {
-          const mailOptions = {
-            from: "mdborhanuddinmajumder058@gmail.com",
-            to: email,
-            subject: "Event Registration",
-            text: `Thank you for registering for the event. Here is the Google Meet link: ${email}`,
-          };
-
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.error(error);
-              return res.status(500).json({ error: "Failed to send email" });
-            }
-            res.status(201).json(user);
-          });
-        })
-        .catch((err) =>
-          res.status(500).json({ error: "Failed to register user" })
-        );
-    })
-    .catch((err) =>
-      res.status(500).json({ error: "Failed to check existing user" })
-    );
+      res.status(201).json(user);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to register user" });
+  }
 };
+
+// exports.createEventUser = (req, res) => {
+//   const { name, email, phone } = req.body;
+
+//   EventUser.findOne({ email })
+//     .then((existingUser) => {
+//       if (existingUser) {
+//         return res
+//           .status(400)
+//           .json({ error: "User already registered for this event" });
+//       }
+
+//       const user = new EventUser({ name, email, phone });
+//       user
+//         .save()
+//         .then(() => {
+//           const mailOptions = {
+//             from: "mdborhanuddinmajumder058@gmail.com",
+//             to: email,
+//             subject: "Event Registration",
+//             text: `Thank you for registering for the event. Here is the Google Meet link: ${email}`,
+//           };
+
+//           transporter.sendMail(mailOptions, (error, info) => {
+//             if (error) {
+//               console.error(error);
+//               return res.status(500).json({ error: "Failed to send email" });
+//             }
+//             res.status(201).json(user);
+//           });
+//         })
+//         .catch((err) =>
+//           res.status(500).json({ error: "Failed to register user" })
+//         );
+//     })
+//     .catch((err) =>
+//       res.status(500).json({ error: "Failed to check existing user" })
+//     );
+// };
 
 exports.getEventUser = async (req, res) => {
   try {
