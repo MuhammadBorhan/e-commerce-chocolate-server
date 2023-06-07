@@ -33,7 +33,17 @@ exports.createEventUser = async (req, res) => {
       from: "Indulge Chocolate",
       to: email,
       subject: "Event Registration",
-      text: `Thank you for registering for the event ${event.title}. Here is the Google Meet link: ${event.gmeet}`,
+      html: `<div>
+      <h3>Thank you for registering for ${event.title}!</h3>
+      <p>Dear ${name},</p>
+      <p>We are excited to have you join us for ${event.title} on ${event.dateTime} at ${event.district}.</p>
+      <p>Please save the date and make sure to arrive on time.</p>
+      <p>Here is the Google Meet link for the event: ${event.gmeet}</p>
+      <p>If you have any questions or need further information, feel free to reach out to us.</p>
+      <p>Thank you once again, and we look forward to seeing you at the event!</p>
+      <p>Best regards,</p>
+      <p>Your Event Team</p>
+    </div>`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
