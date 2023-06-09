@@ -24,11 +24,7 @@ router.route("/selectgiftbox/:id").patch(giftBoxController.updateSelectGiftBox);
 router
   .route("/giftbox/:id")
   .get(giftBoxController.getGiftBoxById)
-  .patch(giftBoxController.updateWithoutImage)
+  .patch(upload.single("image"), giftBoxController.updateGiftBox)
   .delete(giftBoxController.deleteGiftBox);
-
-router
-  .route("/updateWithImage/:id")
-  .patch(upload.single("image"), giftBoxController.updateGiftBoxWithImage);
 
 module.exports = router;

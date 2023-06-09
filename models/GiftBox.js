@@ -14,6 +14,11 @@ const giftBoxSchema = mongoose.Schema(
     price: {
       type: Number,
     },
+    festival: {
+      type: String,
+      required: [true, "Please provide a festival name "],
+      trim: true,
+    },
     desc: {
       type: String,
     },
