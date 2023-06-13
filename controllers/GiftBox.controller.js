@@ -1,5 +1,5 @@
 const GiftBox = require("../models/GiftBox");
-const SelectGiftBox = require("../models/SelectGiftBox");
+const fs = require("fs");
 
 exports.createGiftBox = async (req, res) => {
   try {
@@ -8,7 +8,6 @@ exports.createGiftBox = async (req, res) => {
       const saveGiftBox = new GiftBox({
         name: req.body.name,
         price: req.body.price,
-        festival: req.body.festival,
         desc: req.body.desc,
         brand: req.body.brand,
         productList: req.body.productList,
@@ -85,7 +84,19 @@ exports.getGiftBoxById = async (req, res) => {
 exports.deleteGiftBox = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await GiftBox.deleteOne({ _id: id });
+    const result = await GiftBox.findOneAndDelete({ _id: id });
+
+    const imagePath = result.image;
+    fs.access(imagePath, (err) => {
+      if (err) {
+        console.log("image does not exist");
+      } else {
+        fs.unlink(imagePath, (error) => {
+          if (error) throw error;
+          console.log("image was deleted");
+        });
+      }
+    });
 
     res.status(200).json({
       status: "Successfully Delete",
