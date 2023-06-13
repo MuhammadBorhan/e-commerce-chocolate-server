@@ -92,25 +92,63 @@ exports.deleteBlankBox = async (req, res, next) => {
   }
 };
 
-// exports.updateProductWithImage = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const body = req.body;
-//     const image = req.file.path;
-//     const result = await products.updateOne({ _id: id }, { ...body, image });
+exports.updateBlankBox = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     res.status(200).json({
-//       status: "Successfully update the Product",
-//       data: result,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       status: "fail",
-//       message: "Couldn't update the Product",
-//       error: error.message,
-//     });
-//   }
-// };
+    if (req.file) {
+      const body = req.body;
+      const image = req.file.path;
+      const result = await BlankBox.findOneAndUpdate(
+        { _id: id },
+        { ...body, image }
+      );
+
+      const imagePath = result.image;
+      fs.access(imagePath, (err) => {
+        if (err) {
+          console.log("image does not exist");
+        } else {
+          fs.unlink(imagePath, (error) => {
+            if (error) throw error;
+            console.log("image was deleted");
+          });
+        }
+      });
+
+      res.status(200).json({
+        status: "Successfully Update",
+        data: result,
+      });
+    } else {
+      const body = req.body;
+      const result = await BlankBox.findOneAndUpdate({ _id: id }, body);
+
+      const imagePath = result.image;
+      fs.access(imagePath, (err) => {
+        if (err) {
+          console.log("image does not exist");
+        } else {
+          fs.unlink(imagePath, (error) => {
+            if (error) throw error;
+            console.log("image was deleted");
+          });
+        }
+      });
+
+      res.status(200).json({
+        status: "Successfully Update",
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Couldn't update the Product",
+      error: error.message,
+    });
+  }
+};
 
 // exports.updateProduct = async (req, res) => {
 //   try {
