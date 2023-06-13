@@ -21,10 +21,7 @@ router
 router
   .route("/blankBox/:id")
   .get(blankBoxController.getBlankBoxById)
+  .patch(upload.single("image"), blankBoxController.updateBlankBox)
   .delete(blankBoxController.deleteBlankBox);
-//   .patch(upload.single("image"), productsController.updateProductWithImage)
-//   .patch(productsController.updateProduct)
-
-// router.route("/product/:id").patch(productsController.updateProduct);
 
 module.exports = router;
