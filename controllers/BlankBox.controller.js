@@ -99,7 +99,22 @@ exports.updateBlankBox = async (req, res) => {
     if (req.file) {
       const body = req.body;
       const image = req.file.path;
-      const result = await BlankBox.updateOne({ _id: id }, { ...body, image });
+      const result = await BlankBox.findOneAndUpdate(
+        { _id: id },
+        { ...body, image }
+      );
+
+      const imagePath = result.image;
+      fs.access(imagePath, (err) => {
+        if (err) {
+          console.log("image does not exist");
+        } else {
+          fs.unlink(imagePath, (error) => {
+            if (error) throw error;
+            console.log("image was deleted");
+          });
+        }
+      });
 
       res.status(200).json({
         status: "Successfully Update",
@@ -107,7 +122,19 @@ exports.updateBlankBox = async (req, res) => {
       });
     } else {
       const body = req.body;
-      const result = await BlankBox.updateOne({ _id: id }, body);
+      const result = await BlankBox.findOneAndUpdate({ _id: id }, body);
+
+      const imagePath = result.image;
+      fs.access(imagePath, (err) => {
+        if (err) {
+          console.log("image does not exist");
+        } else {
+          fs.unlink(imagePath, (error) => {
+            if (error) throw error;
+            console.log("image was deleted");
+          });
+        }
+      });
 
       res.status(200).json({
         status: "Successfully Update",
