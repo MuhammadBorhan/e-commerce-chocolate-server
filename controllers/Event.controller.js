@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const fs = require("fs");
 
 exports.createEvent = async (req, res) => {
   try {
@@ -68,7 +69,19 @@ exports.getEventById = async (req, res) => {
 exports.deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Event.deleteOne({ _id: id });
+    const result = await Event.findOneAndDelete({ _id: id });
+
+    const imagePath = result.image;
+    fs.access(imagePath, (err) => {
+      if (err) {
+        console.log("image does not exist");
+      } else {
+        fs.unlink(imagePath, (error) => {
+          if (error) throw error;
+          console.log("image was deleted");
+        });
+      }
+    });
 
     res.status(200).json({
       status: "Successfully Delete",
