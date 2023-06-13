@@ -19,12 +19,12 @@ const trendGiftRoute = require("./routes/TrendGift.route");
 const eventRoute = require("./routes/Event.route");
 const visitorRoute = require("./routes/Visitor.route");
 const eventUserRoute = require("./routes/EventUser.route");
+const blankBoxRoute = require("./routes/BlankBox.route");
 
 // Home page
 app.get("/", (req, res) => {
   res.send(`Wow..!!! Route is Running for Chocolate Project `);
 });
-
 app.use("/api/v1", regionRoute);
 app.use("/api/v1", userRoute);
 app.use("/api/v1", productsRoute);
@@ -34,5 +34,6 @@ app.use("/api/v1", trendGiftRoute);
 app.use("/api/v1", eventRoute);
 app.use("/api/v1", visitorRoute);
 app.use("/api/v1", eventUserRoute);
+app.use("/api/v1", blankBoxRoute);
 
 module.exports = app;
