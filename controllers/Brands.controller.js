@@ -1,12 +1,13 @@
 const Brand = require("../models/Brand");
+const fs = require("fs");
 
 exports.createBrand = async (req, res) => {
   try {
     const newBrand = new Brand({
       name: req.body.name,
       desc: req.body.desc,
-      image: req.files["image"][0].filename,
-      logo: req.files["logo"][0].filename,
+      image: req.files["image"][0].path,
+      logo: req.files["logo"][0].path,
     });
     const result = await newBrand.save();
 
@@ -62,7 +63,31 @@ exports.getBrandById = async (req, res) => {
 exports.deleteBrandById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Brand.deleteOne({ _id: id });
+    const result = await Brand.findOneAndDelete({ _id: id });
+
+    const imagePath = result.logo;
+    fs.access(imagePath, (err) => {
+      if (err) {
+        console.log("image does not exist");
+      } else {
+        fs.unlink(imagePath, (error) => {
+          if (error) throw error;
+          console.log("image was deleted");
+        });
+      }
+    });
+
+    const imagePath2 = result.image;
+    fs.access(imagePath2, (err) => {
+      if (err) {
+        console.log("image does not exist");
+      } else {
+        fs.unlink(imagePath2, (error) => {
+          if (error) throw error;
+          console.log("image was deleted");
+        });
+      }
+    });
 
     res.status(200).json({
       status: "Successfully Delete Brand",

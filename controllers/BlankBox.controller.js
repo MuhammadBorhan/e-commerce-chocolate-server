@@ -45,14 +45,7 @@ exports.getAllBlankBox = async (req, res, next) => {
 exports.getBlankBoxById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await BlankBox.findOne({ _id: id });
-
-    // if (!result) {
-    //   res.status(200).json({
-    //     status: "fail",
-    //     message: "id did not found",
-    //   });
-    // }
+    const result = await BlankBox.findById({ _id: id });
 
     res.status(200).json({
       status: "Success",

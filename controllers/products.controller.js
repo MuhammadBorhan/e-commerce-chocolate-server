@@ -1,4 +1,5 @@
 const products = require("../models/Products");
+const fs = require("fs");
 
 exports.createProduct = async (req, res, next) => {
   try {
@@ -82,7 +83,19 @@ exports.getProductById = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await products.deleteOne({ _id: id });
+    const result = await products.findOneAndDelete({ _id: id });
+
+    const imagePath = result.image;
+    fs.access(imagePath, (err) => {
+      if (err) {
+        console.log("image does not exist");
+      } else {
+        fs.unlink(imagePath, (error) => {
+          if (error) throw error;
+          console.log("image was deleted");
+        });
+      }
+    });
 
     res.status(200).json({
       status: "Successfully Delete",
