@@ -102,18 +102,32 @@ exports.deleteBrandById = async (req, res) => {
   }
 };
 
-exports.updateBrandWithImage = async (req, res) => {
+exports.updateBrandById = async (req, res) => {
   try {
     const { id } = req.params;
-    const body = req.body;
-    const image = req.files["image"][0].filename;
-    const logo = req.files["logo"][0].filename;
-    const result = await Brand.updateOne({ _id: id }, { ...body, image, logo });
 
-    res.status(200).json({
-      status: "Successfully update the Brand",
-      data: result,
-    });
+    if (req.files[0]) {
+      const body = req.body;
+      const image = req.files["image"][0].path;
+      const logo = req.files["logo"][0].path;
+      const result = await Brand.updateOne(
+        { _id: id },
+        { ...body, image, logo }
+      );
+
+      res.status(200).json({
+        status: "Successfully update the Brands",
+        data: result,
+      });
+    } else {
+      const body = req.body;
+      const result = await Brand.updateOne({ _id: id }, body);
+
+      res.status(200).json({
+        status: "Successfully update the Brand",
+        data: result,
+      });
+    }
   } catch (error) {
     res.status(400).json({
       status: "fail",
@@ -123,21 +137,21 @@ exports.updateBrandWithImage = async (req, res) => {
   }
 };
 
-exports.updateBrandWithoutImage = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const result = await Brand.updateOne({ _id: id }, body);
+// exports.updateBrandWithoutImage = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const body = req.body;
+//     const result = await Brand.updateOne({ _id: id }, body);
 
-    res.status(200).json({
-      status: "Successfully update the Brand",
-      data: result,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Couldn't update the Brand",
-      error: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       status: "Successfully update the Brand",
+//       data: result,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       status: "fail",
+//       message: "Couldn't update the Brand",
+//       error: error.message,
+//     });
+//   }
+// };

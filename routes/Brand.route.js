@@ -27,15 +27,13 @@ router
 router
   .route("/brand/:id")
   .get(brandController.getBrandById)
-  .patch(brandController.updateBrandWithoutImage)
+  .patch(
+    upload.fields([
+      { name: "image", maxCount: 1 },
+      { name: "logo", maxCount: 1 },
+    ]),
+    brandController.updateBrandById
+  )
   .delete(brandController.deleteBrandById);
-
-router.route("/updateBrand/:id").patch(
-  upload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "logo", maxCount: 1 },
-  ]),
-  brandController.updateBrandWithImage
-);
 
 module.exports = router;
