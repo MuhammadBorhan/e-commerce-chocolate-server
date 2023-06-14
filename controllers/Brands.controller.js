@@ -116,7 +116,7 @@ exports.updateBrandById = async (req, res) => {
       );
 
       res.status(200).json({
-        status: "Successfully update the Brand",
+        status: "Successfully update the Brands",
         data: result,
       });
     } else {
