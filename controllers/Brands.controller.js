@@ -106,11 +106,12 @@ exports.updateBrandById = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const body = req.body;
+
     if (req.files[0]) {
-      const body = req.body;
       const image = req.files["image"][0].path;
       const logo = req.files["logo"][0].path;
-      const result = await Brand.updateOne(
+      const result = await Brand.findOneAndUpdate(
         { _id: id },
         { ...body, image, logo }
       );
@@ -121,7 +122,7 @@ exports.updateBrandById = async (req, res) => {
       });
     } else {
       const body = req.body;
-      const result = await Brand.updateOne({ _id: id }, body);
+      const result = await Brand.findOneAndUpdate({ _id: id }, body);
 
       res.status(200).json({
         status: "Successfully update the Brand",

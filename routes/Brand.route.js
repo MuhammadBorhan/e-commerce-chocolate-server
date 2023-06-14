@@ -29,8 +29,8 @@ router
   .get(brandController.getBrandById)
   .patch(
     upload.fields([
-      { name: "image", maxCount: 1 },
-      { name: "logo", maxCount: 1 },
+      { name: "image", maxCount: 2 },
+      { name: "logo", maxCount: 2 },
     ]),
     brandController.updateBrandById
   )
