@@ -3,6 +3,8 @@ const router = express.Router();
 const productsController = require("../controllers/products.controller");
 
 const multer = require("multer");
+const authorization = require("../middleware/authorization");
+const verifyToken = require("../middleware/verifyToken");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -16,17 +18,28 @@ const upload = multer({ storage: storage });
 router
   .route("/products")
   .get(productsController.getProducts)
-  .post(upload.single("image"), productsController.createProduct);
+  .post(
+    verifyToken,
+    authorization("admin"),
+    upload.single("image"),
+    productsController.createProduct
+  );
 
 router.route("/product").get(productsController.getProductByBrand);
 
 router
   .route("/products/:id")
   .get(productsController.getProductById)
-  .patch(upload.single("image"), productsController.updateProductWithImage)
-  .patch(productsController.updateProduct)
-  .delete(productsController.deleteProduct);
-
-router.route("/product/:id").patch(productsController.updateProduct);
+  .patch(
+    verifyToken,
+    authorization("admin"),
+    upload.single("image"),
+    productsController.updateProduct
+  )
+  .delete(
+    verifyToken,
+    authorization("admin"),
+    productsController.deleteProduct
+  );
 
 module.exports = router;
