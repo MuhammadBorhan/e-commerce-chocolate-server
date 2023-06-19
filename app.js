@@ -20,6 +20,7 @@ const eventRoute = require("./routes/Event.route");
 const visitorRoute = require("./routes/Visitor.route");
 const eventUserRoute = require("./routes/EventUser.route");
 const blankBoxRoute = require("./routes/BlankBox.route");
+const ordersRoute = require("./routes/Order.route");
 
 // Home page
 app.get("/", (req, res) => {
@@ -35,5 +36,6 @@ app.use("/api/v1", eventRoute);
 app.use("/api/v1", visitorRoute);
 app.use("/api/v1", eventUserRoute);
 app.use("/api/v1", blankBoxRoute);
+app.use("/api/v1", ordersRoute);
 
 module.exports = app;
