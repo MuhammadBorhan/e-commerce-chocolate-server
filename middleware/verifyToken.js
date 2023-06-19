@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({
         status: "fail",
-        error: "Unauthorized access",
+        error: "Unauthorized Access",
       });
     }
 
