@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const brandController = require("../controllers/Brands.controller");
 const multer = require("multer");
+const verifyToken = require("../middleware/verifyToken");
+const authorization = require("../middleware/authorization");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -17,6 +19,8 @@ router
   .route("/brand")
   .get(brandController.getBrands)
   .post(
+    verifyToken,
+    authorization("admin"),
     upload.fields([
       { name: "image", maxCount: 1 },
       { name: "logo", maxCount: 1 },
@@ -28,12 +32,14 @@ router
   .route("/brand/:id")
   .get(brandController.getBrandById)
   .patch(
+    verifyToken,
+    authorization("admin"),
     upload.fields([
       { name: "image", maxCount: 2 },
       { name: "logo", maxCount: 2 },
     ]),
     brandController.updateBrandById
   )
-  .delete(brandController.deleteBrandById);
+  .delete(verifyToken, authorization("admin"), brandController.deleteBrandById);
 
 module.exports = router;
