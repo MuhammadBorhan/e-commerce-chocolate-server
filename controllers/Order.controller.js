@@ -1,9 +1,36 @@
+const nodemailer = require("nodemailer");
 const Order = require("../models/Order");
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "mdborhanuddinmajumder058@gmail.com",
+    pass: "xljtamqdodkuxbzp",
+  },
+});
 exports.postOrder = async (req, res, next) => {
+  const { email, product, firstName, lastName, orderNumber } = req.body;
   try {
     const order = new Order(req.body);
     const result = await order.save();
+
+    const mailOptions = {
+      from: "Indulge Chocolate",
+      to: email,
+      subject: "Order Confirmation",
+      html: `<div>
+      <p>Dear ${firstName} ${lastName},</p>
+      <h3>Thank you for your order. Your order number is  #${orderNumber}!</h3>
+    </div>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Failed to send email" });
+      }
+      res.status(201).json(user);
+    });
 
     res.status(200).json({
       status: "Success",

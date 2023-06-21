@@ -3,6 +3,16 @@ const { generateToken } = require("../utils/token");
 
 exports.postUser = async (req, res, next) => {
   try {
+    const { email } = req.body;
+    const user = await Users.findOne({ email });
+
+    if (user) {
+      return res.status(401).json({
+        status: "fail",
+        error: " User Already Exist",
+      });
+    }
+
     const users = new Users(req.body);
     const result = await users.save();
 
