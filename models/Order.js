@@ -62,6 +62,9 @@ const orderSchema = mongoose.Schema(
       type: [String],
       trim: true,
     },
+    email: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
