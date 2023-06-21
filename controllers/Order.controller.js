@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 exports.postOrder = async (req, res, next) => {
-  const { email, product, firstName, lastName } = req.body;
+  const { email, product, firstName, lastName, orderNumber } = req.body;
   try {
     const order = new Order(req.body);
     const result = await order.save();
@@ -17,10 +17,10 @@ exports.postOrder = async (req, res, next) => {
     const mailOptions = {
       from: "Indulge Chocolate",
       to: email,
-      subject: "Place order",
+      subject: "Order Confirmation",
       html: `<div>
       <p>Dear ${firstName} ${lastName},</p>
-      <h3>Thank you for your order ${product}!</h3>
+      <h3>Thank you for your order. Your order number is  #${orderNumber}!</h3>
     </div>`,
     };
 
