@@ -1,11 +1,13 @@
 const nodemailer = require("nodemailer");
 const Order = require("../models/Order");
+const Users = require("../models/User");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "mdborhanuddinmajumder058@gmail.com",
-    pass: "xljtamqdodkuxbzp",
+    pass: "nwmipbitqdrjyivz",
+    // pass: "xljtamqdodkuxbzp",
   },
 });
 exports.postOrder = async (req, res, next) => {
@@ -20,7 +22,7 @@ exports.postOrder = async (req, res, next) => {
       subject: "Order Confirmation",
       html: `<div>
       <p>Dear ${firstName} ${lastName},</p>
-      <h3>Thank you for your order. Your order number is  #${orderNumber}!</h3>
+      <h3>Thank you for your order. Your order number is  #OR${orderNumber}!</h3>
     </div>`,
     };
 
@@ -115,6 +117,34 @@ exports.deleteOrder = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "Data is not deleted",
+      error: error.message,
+    });
+  }
+};
+
+// get order list by individual user and get all order list by admin
+exports.getOrderList = async (req, res) => {
+  const { role, email } = req.query;
+  try {
+    let orders;
+
+    if (role === "admin") {
+      // Admin can see all orders
+      orders = await Order.find({}).populate("user");
+    } else {
+      // User can only see their own orders
+      const user = await Users.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      orders = await Order.find({ email }).populate("user");
+    }
+
+    res.json(orders);
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Error fetching orders",
       error: error.message,
     });
   }
