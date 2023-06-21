@@ -5,7 +5,8 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "mdborhanuddinmajumder058@gmail.com",
-    pass: "xljtamqdodkuxbzp",
+    pass: "nwmipbitqdrjyivz",
+    // pass: "xljtamqdodkuxbzp",
   },
 });
 exports.postOrder = async (req, res, next) => {
@@ -20,7 +21,7 @@ exports.postOrder = async (req, res, next) => {
       subject: "Order Confirmation",
       html: `<div>
       <p>Dear ${firstName} ${lastName},</p>
-      <h3>Thank you for your order. Your order number is  #${orderNumber}!</h3>
+      <h3>Thank you for your order. Your order number is  #OR${orderNumber}!</h3>
     </div>`,
     };
 
