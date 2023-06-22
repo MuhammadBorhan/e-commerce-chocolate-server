@@ -8,6 +8,8 @@ router
   .route("/orders")
   .get(orderController.getOrders)
   .post(orderController.postOrder);
+
+router.route("/orderlist").get(orderController.getOrderList);
 router
   .route("/order/:id")
   .get(orderController.getOrderById)

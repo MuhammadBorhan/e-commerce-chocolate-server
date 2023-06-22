@@ -13,14 +13,14 @@ const orderSchema = mongoose.Schema(
       required: [true, "Please provide your lastname"],
       trim: true,
     },
-    address1: {
+    address: {
       type: String,
       required: [true, "Please provide your address"],
       trim: true,
     },
-    address2: {
+    phone: {
       type: String,
-      trim: true,
+      required: true,
     },
     region: {
       type: String,
@@ -67,6 +67,14 @@ const orderSchema = mongoose.Schema(
     },
     orderNumber: {
       type: String,
+    },
+    isEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   { timestamps: true }
