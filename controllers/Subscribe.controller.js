@@ -1,12 +1,21 @@
 const Subscribe = require("../models/Subscribe");
 const Package = require("../models/Package");
 const { default: mongoose } = require("mongoose");
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "mdborhanuddinmajumder058@gmail.com",
+    pass: "nwmipbitqdrjyivz",
+  },
+});
 
 exports.createSubscribe = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, userName } = req.body;
     // Insert the new subscription into the Subscribe collection
-    const result = await Subscribe.create({ name, email });
+    const result = await Subscribe.create({ name, email, userName });
 
     // Update the count in the Package collection
     await Package.findOneAndUpdate(
@@ -14,6 +23,40 @@ exports.createSubscribe = async (req, res) => {
       { $inc: { count: 1 } },
       { new: true }
     );
+
+    const mailOptions = {
+      from: "Indulge Chocolate",
+      to: email,
+      subject: "Subscription Confirmation",
+      html: `<div>
+        <p>Dear ${userName} ,</p>
+        <h3>Thank you for your Subscription. </h3>
+      </div>`,
+    };
+    const mailOptions2 = {
+      from: "Indulge Chocolate",
+      to: "mdborhanuddinmajumder058@gmail.com",
+      subject: "Subscription Confirmation",
+      html: `<div>
+        <h3>You have new Subscriber whos name is ${userName} and E-mail is ${email}. </h3>
+      </div>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Failed to send email" });
+      }
+      res.status(201).json(user);
+    });
+
+    transporter.sendMail(mailOptions2, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Failed to send email" });
+      }
+      res.status(201).json(user);
+    });
 
     res.status(200).json({
       status: "Success",
