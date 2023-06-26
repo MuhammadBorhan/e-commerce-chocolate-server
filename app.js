@@ -21,6 +21,8 @@ const visitorRoute = require("./routes/Visitor.route");
 const eventUserRoute = require("./routes/EventUser.route");
 const blankBoxRoute = require("./routes/BlankBox.route");
 const ordersRoute = require("./routes/Order.route");
+const packageRoute = require("./routes/Package.route");
+const subscribeRoute = require("./routes/Subscribe.route");
 
 // Home page
 app.get("/", (req, res) => {
@@ -37,5 +39,7 @@ app.use("/api/v1", visitorRoute);
 app.use("/api/v1", eventUserRoute);
 app.use("/api/v1", blankBoxRoute);
 app.use("/api/v1", ordersRoute);
+app.use("/api/v1", packageRoute);
+app.use("/api/v1", subscribeRoute);
 
 module.exports = app;
