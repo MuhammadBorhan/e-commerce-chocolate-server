@@ -136,3 +136,40 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Users.findOne({ _id: id });
+
+    res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Can't get the user",
+      error: error.message,
+    });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const result = await Users.updateOne({ _id: id }, body);
+
+    res.status(200).json({
+      status: "Successfully Updated",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Couldn't Update the data",
+      error: error.message,
+    });
+  }
+};

@@ -51,6 +51,14 @@ const userSchema = mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    earnedCoin: {
+      type: Number,
+      default: 0,
+    },
+    usedCoin: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
