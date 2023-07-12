@@ -185,7 +185,7 @@ exports.updateUser = async (req, res) => {
 //     }
 //     user.earnedCoin += earnedCoin;
 //     await user.save();
-//     // const result = await Users.updateOne({ _id: id }, body);
+
 //     return res.status(200).json({
 //       status: "Successfully Updated",
 //       data: user,
