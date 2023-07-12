@@ -159,9 +159,9 @@ exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
-    const result = await Users.updateOne({ _id: id }, body);
 
-    res.status(200).json({
+    const result = await Users.updateOne({ _id: id }, body);
+    return res.status(200).json({
       status: "Successfully Updated",
       data: result,
     });
@@ -173,3 +173,28 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
+// exports.updateUser = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { earnedCoin } = req.body;
+
+//     const user = await Users.findOne({ _id: id });
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+//     user.earnedCoin += earnedCoin;
+//     await user.save();
+//     // const result = await Users.updateOne({ _id: id }, body);
+//     return res.status(200).json({
+//       status: "Successfully Updated",
+//       data: user,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       status: "fail",
+//       message: "Couldn't Update the data",
+//       error: error.message,
+//     });
+//   }
+// };
