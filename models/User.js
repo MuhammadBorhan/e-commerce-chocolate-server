@@ -59,6 +59,15 @@ const userSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    serial: {
+      type: String,
+    },
+    level: {
+      type: String,
+    },
+    position: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
